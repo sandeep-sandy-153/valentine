@@ -42,7 +42,7 @@
       padding: 0 30px;
     }
 
-    /* 🔥 SAME SIZE FOR BOTH BUTTONS */
+    /* SAME SIZE BUTTONS */
     button {
       width: 120px;
       height: 55px;
@@ -78,21 +78,22 @@
       line-height: 1.5;
     }
 
-    /* ❤️ HEARTS */
-    .heart {
+    /* 🌹 ROSE PETALS */
+    .petal {
       position: fixed;
-      bottom: -20px;
-      animation: floatUp linear forwards;
+      top: -20px;
+      font-size: 22px;
+      animation: fall linear forwards;
       pointer-events: none;
     }
 
-    @keyframes floatUp {
+    @keyframes fall {
       0% {
-        transform: translateY(0) scale(1);
+        transform: translateY(0) rotate(0deg);
         opacity: 1;
       }
       100% {
-        transform: translateY(-120vh) scale(1.6);
+        transform: translateY(120vh) rotate(360deg);
         opacity: 0;
       }
     }
@@ -114,9 +115,9 @@
     </div>
 
     <div id="message">
-      Yayyyy!!! 💕💫<br>
+      Yayyyy!!! 💕🌹<br>
       You just made my heart the happiest ❤️<br>
-      I can’t wait to make countless memories with you 🌹
+      I can’t wait to make countless memories with you 🌸
     </div>
   </div>
 
@@ -149,28 +150,27 @@
       music.volume = 0.4;
       music.play();
 
-      startHearts();
+      startPetals();
     });
 
-    function startHearts() {
+    function startPetals() {
       setInterval(() => {
         for (let i = 0; i < 3; i++) {
-          const heart = document.createElement("div");
-          heart.classList.add("heart");
-          heart.innerHTML = "❤️";
-          heart.style.left = Math.random() * 100 + "vw";
-          heart.style.fontSize = (Math.random() * 14 + 18) + "px";
-          heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
-          document.body.appendChild(heart);
+          const petal = document.createElement("div");
+          petal.classList.add("petal");
+          petal.innerHTML = "🌹";
+          petal.style.left = Math.random() * 100 + "vw";
+          petal.style.fontSize = (Math.random() * 14 + 18) + "px";
+          petal.style.animationDuration = (Math.random() * 3 + 4) + "s";
+          document.body.appendChild(petal);
 
           setTimeout(() => {
-            heart.remove();
-          }, 5000);
+            petal.remove();
+          }, 6000);
         }
-      }, 300);
+      }, 350);
     }
   </script>
 
 </body>
 </html>
-
