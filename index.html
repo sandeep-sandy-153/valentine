@@ -20,9 +20,9 @@
     .container {
       background: white;
       padding: 40px 30px;
-      border-radius: 18px;
+      border-radius: 20px;
       text-align: center;
-      width: 330px;
+      width: 360px;
       position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       z-index: 2;
@@ -30,24 +30,30 @@
 
     h2 {
       color: #e91e63;
-      margin-bottom: 30px;
+      margin-bottom: 35px;
       line-height: 1.4;
     }
 
     .buttons {
       position: relative;
-      height: 100px;
+      height: 120px;
       display: flex;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 30px;
     }
 
+    /* 🔥 SAME SIZE FOR BOTH BUTTONS */
     button {
-      padding: 10px 22px;
+      width: 120px;
+      height: 55px;
       font-size: 16px;
       border: none;
-      border-radius: 20px;
+      border-radius: 28px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
     #yesBtn {
@@ -59,7 +65,7 @@
       background-color: #aaa;
       color: white;
       position: absolute;
-      left: 200px;
+      left: 220px;
       top: 0;
     }
 
@@ -69,10 +75,10 @@
       font-size: 18px;
       color: #e91e63;
       font-weight: bold;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
-    /* ❤️ Hearts */
+    /* ❤️ HEARTS */
     .heart {
       position: fixed;
       bottom: -20px;
@@ -103,7 +109,7 @@
     <h2>Chinni my love 💖<br>Will you be my Valentine?</h2>
 
     <div class="buttons">
-      <button id="yesBtn">Yes ❤️</button>
+      <button id="yesBtn">Yes 💖</button>
       <button id="noBtn">No 🙅‍♂️</button>
     </div>
 
@@ -153,7 +159,7 @@
           heart.classList.add("heart");
           heart.innerHTML = "❤️";
           heart.style.left = Math.random() * 100 + "vw";
-          heart.style.fontSize = (Math.random() * 12 + 18) + "px";
+          heart.style.fontSize = (Math.random() * 14 + 18) + "px";
           heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
           document.body.appendChild(heart);
 
