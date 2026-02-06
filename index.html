@@ -107,6 +107,12 @@ button {
 .slider img {
   width:100%;
   border-radius:15px;
+  opacity:0;
+  transition:opacity 0.4s ease;
+}
+
+.slider img.show {
+  opacity:1;
 }
 
 .caption {
@@ -135,7 +141,7 @@ button {
   visibility:hidden;
 }
 
-/* FINAL MESSAGE (inside slider flow) */
+/* FINAL MESSAGE */
 .final {
   display:none;
   margin-top:25px;
@@ -212,6 +218,16 @@ const slides = [
   {img:"photo12.jpg", text:"And this… is forever 💍"}
 ];
 
+/* 🔹 PRELOAD IMAGES (KEY FIX) */
+const preloadedImages = [];
+function preloadImages() {
+  slides.forEach(slide => {
+    const img = new Image();
+    img.src = slide.img;
+    preloadedImages.push(img);
+  });
+}
+
 let index = 0;
 let atFinal = false;
 
@@ -239,8 +255,11 @@ yesBtn.onclick = () => {
   question.style.display="none";
   yesMessage.style.display="block";
   hint.style.display="block";
+
   music.volume=0.4;
   music.play();
+
+  preloadImages();   // ✅ PRELOAD HERE
   startHearts();
 };
 
@@ -253,13 +272,18 @@ hint.onclick = () => {
 
 function showSlide() {
   atFinal = false;
+  img.classList.remove("show");
+  finalMsg.style.display="none";
   img.style.display="block";
   txt.style.display="block";
-  finalMsg.style.display="none";
 
-  img.src = slides[index].img;
-  txt.innerText = slides[index].text;
-  body.style.background = pastelBg[index];
+  setTimeout(() => {
+    img.src = slides[index].img;
+    txt.innerText = slides[index].text;
+    body.style.background = pastelBg[index];
+
+    img.onload = () => img.classList.add("show");
+  }, 40);
 
   prev.classList.toggle("hidden", index===0);
   next.classList.remove("hidden");
@@ -283,8 +307,8 @@ next.onclick = () => {
 
 prev.onclick = () => {
   if(atFinal){
-    atFinal = false;
-    index = slides.length-1;
+    atFinal=false;
+    index=slides.length-1;
     showSlide();
     return;
   }
@@ -309,5 +333,3 @@ function startHearts(){
 
 </body>
 </html>
-
-
