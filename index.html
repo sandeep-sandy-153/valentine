@@ -55,101 +55,94 @@ button {
   justify-content: center;
 }
 
-#yesBtn {
-  background: #e91e63;
-  color: white;
-}
-
+#yesBtn { background:#e91e63; color:white; }
 #noBtn {
-  background: #aaa;
-  color: white;
-  position: absolute;
-  left: 220px;
-  top: 0;
+  background:#aaa; color:white;
+  position:absolute; left:220px; top:0;
 }
 
 /* YES MESSAGE */
 #yesMessage {
-  display: none;
-  font-size: 18px;
-  font-weight: bold;
-  color: #e91e63;
-  margin-top: 20px;
-  line-height: 1.4;
+  display:none;
+  font-size:18px;
+  font-weight:bold;
+  color:#e91e63;
+  margin-top:20px;
+  line-height:1.4;
 }
 
 /* CLICK HINT */
 .hint {
-  display: none;
-  margin-top: 15px;
-  font-size: 18px;
-  animation: pulse 1.5s infinite;
+  display:none;
+  margin-top:15px;
+  font-size:18px;
+  animation:pulse 1.5s infinite;
 }
 
 @keyframes pulse {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%,100% { transform:scale(1); }
+  50% { transform:scale(1.1); }
 }
 
 /* ❤️ HEARTS */
 .heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 22px;
-  animation: floatUp linear forwards;
-  pointer-events: none;
+  position:fixed;
+  bottom:-20px;
+  font-size:22px;
+  animation:floatUp linear forwards;
+  pointer-events:none;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-120vh); opacity: 0; }
+  0% { transform:translateY(0); opacity:1; }
+  100% { transform:translateY(-120vh); opacity:0; }
 }
 
 /* SLIDER */
 .slider {
-  display: none;
-  margin-top: 20px;
+  display:none;
+  margin-top:20px;
 }
 
 .slider img {
-  width: 100%;
-  border-radius: 15px;
+  width:100%;
+  border-radius:15px;
 }
 
 .caption {
-  margin-top: 12px;
-  font-size: 16px;
-  color: #444;
-  font-weight: 600;
+  margin-top:12px;
+  font-size:16px;
+  color:#444;
+  font-weight:600;
 }
 
-/* NAVIGATION */
+/* NAV */
 .nav {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
+  display:flex;
+  justify-content:space-between;
+  margin-top:15px;
 }
 
 .nav button {
-  padding: 8px 14px;
-  background: rgba(233, 30, 99, 0.15); /* softer pastel */
-  color: #e91e63;
-  border-radius: 20px;
-  font-size: 14px;
+  padding:8px 14px;
+  background:rgba(233,30,99,0.15);
+  color:#e91e63;
+  border-radius:20px;
+  font-size:14px;
 }
 
-.nav button:disabled {
-  visibility: hidden;
+.nav button.hidden {
+  visibility:hidden;
 }
 
 /* FINAL MESSAGE */
 .final {
-  display: none;
-  margin-top: 25px;
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  line-height: 1.5;
+  display:none;
+  margin-top:25px;
+  font-size:18px;
+  font-weight:bold;
+  color:#0b3c49; /* dark navy – clearly visible */
+  line-height:1.5;
 }
 </style>
 </head>
@@ -198,7 +191,7 @@ button {
 </div>
 
 <script>
-const pastelBackgrounds = [
+const pastelBg = [
   "#fde2e4","#e4f1fe","#e8f8f5","#fef6e4","#f3e8ff",
   "#e0f2f1","#fff1f2","#f0f9ff","#fef3c7","#ede9fe","#fce7f3"
 ];
@@ -218,6 +211,7 @@ const slides = [
 ];
 
 let index = 0;
+let atFinal = false;
 
 const body = document.body;
 const yesBtn = document.getElementById("yesBtn");
@@ -234,70 +228,78 @@ const next = document.getElementById("next");
 const music = document.getElementById("bgMusic");
 
 noBtn.onmouseover = () => {
-  noBtn.style.left = Math.random() * 200 + "px";
-  noBtn.style.top = Math.random() * 80 + "px";
+  noBtn.style.left = Math.random()*200+"px";
+  noBtn.style.top = Math.random()*80+"px";
 };
 
 yesBtn.onclick = () => {
-  document.querySelector(".buttons").style.display = "none";
-  question.style.display = "none";
-  yesMessage.style.display = "block";
-  hint.style.display = "block";
-  music.volume = 0.4;
+  document.querySelector(".buttons").style.display="none";
+  question.style.display="none";
+  yesMessage.style.display="block";
+  hint.style.display="block";
+  music.volume=0.4;
   music.play();
   startHearts();
 };
 
 hint.onclick = () => {
-  hint.style.display = "none";
-  yesMessage.style.display = "none";
-  slider.style.display = "block";
+  hint.style.display="none";
+  yesMessage.style.display="none";
+  slider.style.display="block";
   showSlide();
 };
 
 function showSlide() {
+  atFinal = false;
+  finalMsg.style.display="none";
+  img.style.display="block";
+  txt.style.display="block";
   img.src = slides[index].img;
   txt.innerText = slides[index].text;
-  body.style.background = pastelBackgrounds[index];
+  body.style.background = pastelBg[index];
 
-  prev.disabled = index === 0;
-  next.disabled = false;
+  prev.classList.toggle("hidden", index===0);
+  next.classList.remove("hidden");
 }
 
 next.onclick = () => {
-  if (index < slides.length - 1) {
+  if(index < slides.length-1){
     index++;
     showSlide();
   } else {
-    slider.style.display = "none";
-    body.style.background = "#4aa3b8";
-    finalMsg.style.display = "block";
+    // final message
+    atFinal = true;
+    slider.style.display="none";
+    finalMsg.style.display="block";
+    body.style.background="#4aa3b8";
+    prev.classList.remove("hidden");
+    next.classList.add("hidden");
   }
 };
 
 prev.onclick = () => {
-  if (finalMsg.style.display === "block") {
-    finalMsg.style.display = "none";
-    slider.style.display = "block";
+  if(atFinal){
+    atFinal=false;
+    slider.style.display="block";
     showSlide();
     return;
   }
-  if (index > 0) {
+  if(index>0){
     index--;
     showSlide();
   }
 };
 
-function startHearts() {
-  setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "❤️";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (Math.random() * 2 + 3) + "s";
+function startHearts(){
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(Math.random()*2+3)+"s";
     document.body.appendChild(h);
-    setTimeout(() => h.remove(), 5000);
-  }, 300);
+    setTimeout(()=>h.remove(),5000);
+  },300);
 }
 </script>
 
