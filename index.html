@@ -6,134 +6,151 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-  body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    transition: background 0.8s ease;
-  }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  transition: background 0.8s ease;
+}
 
-  .container {
-    background: white;
-    padding: 35px 25px;
-    border-radius: 20px;
-    width: 92%;
-    max-width: 380px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    z-index: 2;
-  }
+.container {
+  background: white;
+  padding: 35px 25px;
+  border-radius: 20px;
+  width: 92%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  z-index: 2;
+}
 
-  h2 {
-    color: #e91e63;
-    margin-bottom: 30px;
-    line-height: 1.4;
-  }
+h2 {
+  color: #e91e63;
+  margin-bottom: 30px;
+  line-height: 1.4;
+}
 
-  .buttons {
-    position: relative;
-    height: 120px;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 25px;
-  }
+.buttons {
+  position: relative;
+  height: 120px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 25px;
+}
 
-  button {
-    width: 120px;
-    height: 55px;
-    border-radius: 28px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+button {
+  width: 120px;
+  height: 55px;
+  border-radius: 28px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  #yesBtn {
-    background: #e91e63;
-    color: white;
-  }
+#yesBtn {
+  background: #e91e63;
+  color: white;
+}
 
-  #noBtn {
-    background: #aaa;
-    color: white;
-    position: absolute;
-    left: 220px;
-    top: 0;
-  }
+#noBtn {
+  background: #aaa;
+  color: white;
+  position: absolute;
+  left: 220px;
+  top: 0;
+}
 
-  .hint {
-    display: none;
-    margin-top: 15px;
-    font-size: 18px;
-    animation: pulse 1.5s infinite;
-  }
+/* YES MESSAGE */
+#yesMessage {
+  display: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #e91e63;
+  margin-top: 20px;
+  line-height: 1.4;
+}
 
-  @keyframes pulse {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
+/* CLICK HINT */
+.hint {
+  display: none;
+  margin-top: 15px;
+  font-size: 18px;
+  animation: pulse 1.5s infinite;
+}
 
-  /* ❤️ HEARTS */
-  .heart {
-    position: fixed;
-    bottom: -20px;
-    font-size: 22px;
-    animation: floatUp linear forwards;
-    pointer-events: none;
-  }
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
 
-  @keyframes floatUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-120vh); opacity: 0; }
-  }
+/* ❤️ HEARTS */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 22px;
+  animation: floatUp linear forwards;
+  pointer-events: none;
+}
 
-  /* 📸 SLIDER */
-  .slider {
-    display: none;
-    margin-top: 20px;
-  }
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-120vh); opacity: 0; }
+}
 
-  .slider img {
-    width: 100%;
-    border-radius: 15px;
-  }
+/* SLIDER */
+.slider {
+  display: none;
+  margin-top: 20px;
+}
 
-  .caption {
-    margin-top: 12px;
-    font-size: 16px;
-    color: #444;
-    font-weight: 600;
-  }
+.slider img {
+  width: 100%;
+  border-radius: 15px;
+}
 
-  .nav {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-  }
+.caption {
+  margin-top: 12px;
+  font-size: 16px;
+  color: #444;
+  font-weight: 600;
+}
 
-  .nav button {
-    padding: 8px 14px;
-    background: #e91e63;
-    color: white;
-    border-radius: 20px;
-    font-size: 14px;
-  }
+/* NAVIGATION */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
 
-  .final {
-    display: none;
-    margin-top: 25px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    line-height: 1.5;
-  }
+.nav button {
+  padding: 8px 14px;
+  background: rgba(233, 30, 99, 0.15); /* softer pastel */
+  color: #e91e63;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.nav button:disabled {
+  visibility: hidden;
+}
+
+/* FINAL MESSAGE */
+.final {
+  display: none;
+  margin-top: 25px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  line-height: 1.5;
+}
 </style>
 </head>
 
@@ -145,42 +162,45 @@
 
 <div class="container">
 
-  <h2 id="titleText">
-    Chinni my love 💖<br>
-    Will you be my Valentine?
-  </h2>
+<h2 id="question">
+  Chinni my love 💖<br>
+  Will you be my Valentine?
+</h2>
 
-  <div class="buttons">
-    <button id="yesBtn">Yes 💖</button>
-    <button id="noBtn">No 🙅‍♂️</button>
+<div class="buttons">
+  <button id="yesBtn">Yes 💖</button>
+  <button id="noBtn">No 🙅‍♂️</button>
+</div>
+
+<div id="yesMessage">
+  Yayyyy!!! 💕<br>
+  You just made my heart the happiest ❤️
+</div>
+
+<div class="hint">👉 Click 👈</div>
+
+<div class="slider">
+  <img id="slideImg">
+  <div class="caption" id="slideText"></div>
+
+  <div class="nav">
+    <button id="prev">⬅️</button>
+    <button id="next">➡️</button>
   </div>
+</div>
 
-  <!-- ✅ CLICK TEXT FIXED HERE -->
-  <div class="hint">👉 Click 👈</div>
-
-  <div class="slider">
-    <img id="slideImg">
-    <div class="caption" id="slideText"></div>
-
-    <div class="nav">
-      <button id="prev">⬅️</button>
-      <button id="next">➡️</button>
-    </div>
-  </div>
-
-  <div class="final" id="finalMsg">
-    Chinni my love,<br>
-    This little journey is my way of telling you<br>
-    that choosing you was the easiest decision of my life 💙
-  </div>
+<div class="final" id="finalMsg">
+  Chinni my love,<br>
+  This little journey is my way of telling you<br>
+  that choosing you was the easiest decision of my life 💙
+</div>
 
 </div>
 
 <script>
 const pastelBackgrounds = [
-  "#fde2e4", "#e4f1fe", "#e8f8f5", "#fef6e4",
-  "#f3e8ff", "#e0f2f1", "#fff1f2",
-  "#f0f9ff", "#fef3c7", "#ede9fe", "#fce7f3"
+  "#fde2e4","#e4f1fe","#e8f8f5","#fef6e4","#f3e8ff",
+  "#e0f2f1","#fff1f2","#f0f9ff","#fef3c7","#ede9fe","#fce7f3"
 ];
 
 const slides = [
@@ -200,14 +220,17 @@ const slides = [
 let index = 0;
 
 const body = document.body;
-const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const question = document.getElementById("question");
+const yesMessage = document.getElementById("yesMessage");
 const hint = document.querySelector(".hint");
 const slider = document.querySelector(".slider");
-const titleText = document.getElementById("titleText");
 const finalMsg = document.getElementById("finalMsg");
 const img = document.getElementById("slideImg");
 const txt = document.getElementById("slideText");
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
 const music = document.getElementById("bgMusic");
 
 noBtn.onmouseover = () => {
@@ -217,6 +240,8 @@ noBtn.onmouseover = () => {
 
 yesBtn.onclick = () => {
   document.querySelector(".buttons").style.display = "none";
+  question.style.display = "none";
+  yesMessage.style.display = "block";
   hint.style.display = "block";
   music.volume = 0.4;
   music.play();
@@ -225,7 +250,7 @@ yesBtn.onclick = () => {
 
 hint.onclick = () => {
   hint.style.display = "none";
-  titleText.style.display = "none";
+  yesMessage.style.display = "none";
   slider.style.display = "block";
   showSlide();
 };
@@ -234,30 +259,34 @@ function showSlide() {
   img.src = slides[index].img;
   txt.innerText = slides[index].text;
   body.style.background = pastelBackgrounds[index];
+
+  prev.disabled = index === 0;
+  next.disabled = false;
 }
 
-document.getElementById("next").onclick = () => {
+next.onclick = () => {
   if (index < slides.length - 1) {
     index++;
     showSlide();
   } else {
     slider.style.display = "none";
-    body.style.background = "#4aa3b8"; // sea blue
+    body.style.background = "#4aa3b8";
     finalMsg.style.display = "block";
   }
 };
 
-document.getElementById("prev").onclick = () => {
+prev.onclick = () => {
+  if (finalMsg.style.display === "block") {
+    finalMsg.style.display = "none";
+    slider.style.display = "block";
+    showSlide();
+    return;
+  }
   if (index > 0) {
     index--;
     showSlide();
   }
 };
-
-document.addEventListener("keydown", e => {
-  if (e.key === "ArrowRight") document.getElementById("next").click();
-  if (e.key === "ArrowLeft") document.getElementById("prev").click();
-});
 
 function startHearts() {
   setInterval(() => {
