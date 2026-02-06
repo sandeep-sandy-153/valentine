@@ -135,13 +135,13 @@ button {
   visibility:hidden;
 }
 
-/* FINAL MESSAGE */
+/* FINAL MESSAGE (inside slider flow) */
 .final {
   display:none;
   margin-top:25px;
   font-size:18px;
   font-weight:bold;
-  color:#0b3c49; /* dark navy – clearly visible */
+  color:#0b3c49;
   line-height:1.5;
 }
 </style>
@@ -176,24 +176,25 @@ button {
   <img id="slideImg">
   <div class="caption" id="slideText"></div>
 
+  <div class="final" id="finalMsg">
+    Chinni my love,<br>
+    This little journey is my way of telling you<br>
+    that choosing you was the easiest decision of my life 💙
+  </div>
+
   <div class="nav">
     <button id="prev">⬅️</button>
     <button id="next">➡️</button>
   </div>
 </div>
 
-<div class="final" id="finalMsg">
-  Chinni my love,<br>
-  This little journey is my way of telling you<br>
-  that choosing you was the easiest decision of my life 💙
-</div>
-
 </div>
 
 <script>
 const pastelBg = [
-  "#fde2e4","#e4f1fe","#e8f8f5","#fef6e4","#f3e8ff",
-  "#e0f2f1","#fff1f2","#f0f9ff","#fef3c7","#ede9fe","#fce7f3"
+  "#fde2e4","#e4f1fe","#e8f8f5","#fef6e4",
+  "#f3e8ff","#e0f2f1","#fff1f2","#f0f9ff",
+  "#fef3c7","#ede9fe","#fce7f3","#ecfeff"
 ];
 
 const slides = [
@@ -207,7 +208,8 @@ const slides = [
   {img:"photo8.jpg", text:"Laughs, fights, love – all with you"},
   {img:"photo9.jpg", text:"I choose you, every single day"},
   {img:"photo10.jpg", text:"My today and all my tomorrows"},
-  {img:"photo11.jpg", text:"This is just the beginning…"}
+  {img:"photo11.jpg", text:"This is just the beginning…"},
+  {img:"photo12.jpg", text:"And this… is forever 💍"}
 ];
 
 let index = 0;
@@ -251,9 +253,10 @@ hint.onclick = () => {
 
 function showSlide() {
   atFinal = false;
-  finalMsg.style.display="none";
   img.style.display="block";
   txt.style.display="block";
+  finalMsg.style.display="none";
+
   img.src = slides[index].img;
   txt.innerText = slides[index].text;
   body.style.background = pastelBg[index];
@@ -267,11 +270,12 @@ next.onclick = () => {
     index++;
     showSlide();
   } else {
-    // final message
     atFinal = true;
-    slider.style.display="none";
+    img.style.display="none";
+    txt.style.display="none";
     finalMsg.style.display="block";
     body.style.background="#4aa3b8";
+
     prev.classList.remove("hidden");
     next.classList.add("hidden");
   }
@@ -279,8 +283,8 @@ next.onclick = () => {
 
 prev.onclick = () => {
   if(atFinal){
-    atFinal=false;
-    slider.style.display="block";
+    atFinal = false;
+    index = slides.length-1;
     showSlide();
     return;
   }
