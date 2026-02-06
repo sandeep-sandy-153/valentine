@@ -8,7 +8,7 @@
   <style>
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -19,19 +19,19 @@
 
     .container {
       background: white;
-      padding: 40px 30px;
+      padding: 35px 25px;
       border-radius: 20px;
+      width: 92%;
+      max-width: 380px;
       text-align: center;
-      width: 360px;
-      position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       z-index: 2;
     }
 
     h2 {
       color: #e91e63;
-      margin-bottom: 35px;
       line-height: 1.4;
+      margin-bottom: 30px;
     }
 
     .buttons {
@@ -39,16 +39,15 @@
       height: 120px;
       display: flex;
       justify-content: space-between;
-      padding: 0 30px;
+      padding: 0 25px;
     }
 
-    /* SAME SIZE BUTTONS */
     button {
       width: 120px;
       height: 55px;
-      font-size: 16px;
-      border: none;
       border-radius: 28px;
+      border: none;
+      font-size: 16px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -57,12 +56,12 @@
     }
 
     #yesBtn {
-      background-color: #e91e63;
+      background: #e91e63;
       color: white;
     }
 
     #noBtn {
-      background-color: #aaa;
+      background: #aaa;
       color: white;
       position: absolute;
       left: 220px;
@@ -71,106 +70,213 @@
 
     #message {
       display: none;
-      margin-top: 25px;
       font-size: 18px;
-      color: #e91e63;
       font-weight: bold;
-      line-height: 1.5;
+      color: #e91e63;
+      margin-top: 20px;
+      line-height: 1.4;
     }
 
-    /* 🌹 ROSE PETALS */
-    .petal {
+    /* 👈 CLICK HINT */
+    .hint {
+      display: none;
+      margin-top: 15px;
+      font-size: 18px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* ❤️ HEARTS */
+    .heart {
       position: fixed;
-      top: -20px;
+      bottom: -20px;
       font-size: 22px;
-      animation: fall linear forwards;
+      animation: floatUp linear forwards;
       pointer-events: none;
     }
 
-    @keyframes fall {
+    @keyframes floatUp {
       0% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0) scale(1);
         opacity: 1;
       }
       100% {
-        transform: translateY(120vh) rotate(360deg);
+        transform: translateY(-120vh) scale(1.6);
         opacity: 0;
       }
+    }
+
+    /* 📸 SLIDER */
+    .slider {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .slider img {
+      width: 100%;
+      border-radius: 15px;
+    }
+
+    .caption {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #e91e63;
+      font-weight: 600;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .nav button {
+      width: auto;
+      padding: 8px 14px;
+      font-size: 14px;
+      background: #e91e63;
+      color: white;
+      border-radius: 20px;
+    }
+
+    .final {
+      display: none;
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #e91e63;
+      line-height: 1.4;
     }
   </style>
 </head>
 <body>
 
-  <!-- 🎵 Background Music -->
-  <audio id="bgMusic" loop>
-    <source src="https://sandeep-sandy-153.github.io/valentine/valentine-music.mp3" type="audio/mpeg">
-  </audio>
+<audio id="bgMusic" loop>
+  <source src="https://sandeep-sandy-153.github.io/valentine/valentine-music.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="container">
-    <h2>Chinni my love 💖<br>Will you be my Valentine?</h2>
+<div class="container">
+  <h2>Chinni my love 💖<br>Will you be my Valentine?</h2>
 
-    <div class="buttons">
-      <button id="yesBtn">Yes 💖</button>
-      <button id="noBtn">No 🙅‍♂️</button>
-    </div>
+  <div class="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 🙅‍♂️</button>
+  </div>
 
-    <div id="message">
-      Yayyyy!!! 💕🌹<br>
-      You just made my heart the happiest ❤️<br>
-      I can’t wait to make countless memories with you 🌸
+  <div id="message">
+    Yayyyy!!! 💕<br>
+    You just made my heart the happiest ❤️
+  </div>
+
+  <div class="hint">👈 Click 👉</div>
+
+  <div class="slider">
+    <img id="slideImg">
+    <div class="caption" id="slideText"></div>
+
+    <div class="nav">
+      <button id="prev">⬅️</button>
+      <button id="next">➡️</button>
     </div>
   </div>
 
-  <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const message = document.getElementById("message");
-    const buttons = document.querySelector(".buttons");
-    const container = document.querySelector(".container");
-    const music = document.getElementById("bgMusic");
+  <div class="final">
+    Chinni my love,<br>
+    This little journey is my way of telling you<br>
+    that choosing you was the easiest decision of my life ❤️
+  </div>
+</div>
 
-    function moveNoButton() {
-      const maxX = container.clientWidth - noBtn.offsetWidth;
-      const maxY = container.clientHeight - noBtn.offsetHeight;
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const music = document.getElementById("bgMusic");
+  const message = document.getElementById("message");
+  const hint = document.querySelector(".hint");
+  const slider = document.querySelector(".slider");
+  const finalMsg = document.querySelector(".final");
 
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+  noBtn.onmouseover = () => {
+    noBtn.style.left = Math.random() * 200 + "px";
+    noBtn.style.top = Math.random() * 80 + "px";
+  };
 
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+  yesBtn.onclick = () => {
+    document.querySelector(".buttons").style.display = "none";
+    message.style.display = "block";
+    hint.style.display = "block";
+    music.volume = 0.4;
+    music.play();
+    startHearts();
+  };
+
+  hint.onclick = () => {
+    hint.style.display = "none";
+    slider.style.display = "block";
+    showSlide();
+  };
+
+  function startHearts() {
+    setInterval(() => {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerHTML = "❤️";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.animationDuration = (Math.random() * 2 + 3) + "s";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 5000);
+    }, 300);
+  }
+
+  const slides = [
+    {img:"photo1.jpg", text:"The day I realized you were special ❤️"},
+    {img:"photo2.jpg", text:"Your smile still makes everything better"},
+    {img:"photo3.jpg", text:"Every moment with you feels right"},
+    {img:"photo4.jpg", text:"You turned ordinary days into memories"},
+    {img:"photo5.jpg", text:"With you, even silence feels warm"},
+    {img:"photo6.jpg", text:"I found my calm in you"},
+    {img:"photo7.jpg", text:"You are my favorite thought"},
+    {img:"photo8.jpg", text:"Laughs, fights, love – all with you"},
+    {img:"photo9.jpg", text:"I choose you, every single day"},
+    {img:"photo10.jpg", text:"My today and all my tomorrows"},
+    {img:"photo11.jpg", text:"This is just the beginning… 💍"}
+  ];
+
+  let index = 0;
+  const img = document.getElementById("slideImg");
+  const txt = document.getElementById("slideText");
+
+  function showSlide() {
+    img.src = slides[index].img;
+    txt.innerText = slides[index].text;
+  }
+
+  document.getElementById("next").onclick = () => {
+    if (index < slides.length - 1) {
+      index++;
+      showSlide();
+    } else {
+      slider.style.display = "none";
+      finalMsg.style.display = "block";
     }
+  };
 
-    noBtn.addEventListener("mouseover", moveNoButton);
-    noBtn.addEventListener("click", moveNoButton);
-
-    yesBtn.addEventListener("click", () => {
-      buttons.style.display = "none";
-      message.style.display = "block";
-
-      music.volume = 0.4;
-      music.play();
-
-      startPetals();
-    });
-
-    function startPetals() {
-      setInterval(() => {
-        for (let i = 0; i < 3; i++) {
-          const petal = document.createElement("div");
-          petal.classList.add("petal");
-          petal.innerHTML = "🌹";
-          petal.style.left = Math.random() * 100 + "vw";
-          petal.style.fontSize = (Math.random() * 14 + 18) + "px";
-          petal.style.animationDuration = (Math.random() * 3 + 4) + "s";
-          document.body.appendChild(petal);
-
-          setTimeout(() => {
-            petal.remove();
-          }, 6000);
-        }
-      }, 350);
+  document.getElementById("prev").onclick = () => {
+    if (index > 0) {
+      index--;
+      showSlide();
     }
-  </script>
+  };
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") document.getElementById("next").click();
+    if (e.key === "ArrowLeft") document.getElementById("prev").click();
+  });
+</script>
 
 </body>
 </html>
