@@ -264,15 +264,14 @@ noBtn.style.top=Math.random()*maxY+"px";
 
 if(!yesCentered){
 yesCentered=true;
-yesBtn.style.position="fixed";
-yesBtn.style.left="50%";
-yesBtn.style.top="65%";   /* ONLY CHANGE HERE */
-yesBtn.style.transform="translate(-50%,-50%) scale(1)";
-yesBtn.style.zIndex="1000";
+yesBtn.style.position="relative";
+yesBtn.style.margin="40px auto 0 auto";
+yesBtn.style.display="block";
+yesBtn.style.transform="scale(1)";
 }
 
 yesScale+=0.05;
-yesBtn.style.transform="translate(-50%,-50%) scale("+yesScale+")";
+yesBtn.style.transform="scale("+yesScale+")";
 }
 
 noBtn.onmouseover=moveNoButton;
@@ -364,3 +363,4 @@ setTimeout(()=>heart.remove(),6000);
 
 </body>
 </html>
+
