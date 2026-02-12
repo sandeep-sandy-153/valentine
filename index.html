@@ -55,10 +55,18 @@ button {
   justify-content: center;
 }
 
-#yesBtn { background:#e91e63; color:white; }
+#yesBtn {
+  background:#e91e63;
+  color:white;
+  transition: transform 0.3s ease; /* smooth growth */
+}
+
 #noBtn {
-  background:#aaa; color:white;
-  position:absolute; left:220px; top:0;
+  background:#aaa;
+  color:white;
+  position:absolute;
+  left:220px;
+  top:0;
 }
 
 /* YES MESSAGE */
@@ -184,7 +192,7 @@ button {
 
   <div class="final" id="finalMsg">
     Chinni ,<br>
-    Chinni mana ee prayanam lo chala daggara ayyam inka daggara ga avvali ani naku chala anipisthundi
+    Mana ee prayanam lo chala daggara ayyam inka daggara ga avvali ani naku chala anipisthundi
     Adi Twaralone jaruguthundi ani niku mata isthunna. Chala sarlu Godava paddam But nenu ayithe naku nitho padina kanna godava nuvve important anipisthadi chinni<br>
     Manam eppudu ilane enni sarlu godava padina manchiga kalisi undali chinni<br>
     Wanted to be your valentine for the rest of my life💙
@@ -220,18 +228,28 @@ const slides = [
   {img:"photo12.jpg", text:"My Bujji Kutti chinni nuvu entha Boddhu ga untavo thelusa 😘 alane undu, Danikosam Nuvvu thintu undu nenu peduthu unta 🍲"}
 ];
 
-/* 🔹 PRELOAD IMAGES (KEY FIX) */
-const preloadedImages = [];
-function preloadImages() {
-  slides.forEach(slide => {
-    const img = new Image();
-    img.src = slide.img;
-    preloadedImages.push(img);
-  });
-}
+/* PRELOAD */
+slides.forEach(s => {
+  const i = new Image();
+  i.src = s.img;
+});
 
-let index = 0;
-let atFinal = false;
+/* NO BUTTON UPGRADE */
+let yesScale = 1;
+function moveNoButton() {
+  const maxX = window.innerWidth - noBtn.offsetWidth;
+  const maxY = window.innerHeight - noBtn.offsetHeight;
+
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
+
+  noBtn.style.position = "fixed";
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
+
+  yesScale += 0.05;
+  yesBtn.style.transform = `scale(${yesScale})`;
+}
 
 const body = document.body;
 const yesBtn = document.getElementById("yesBtn");
@@ -247,21 +265,16 @@ const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 const music = document.getElementById("bgMusic");
 
-noBtn.onmouseover = () => {
-  noBtn.style.left = Math.random()*200+"px";
-  noBtn.style.top = Math.random()*80+"px";
-};
+noBtn.onmouseover = moveNoButton;
+noBtn.onclick = moveNoButton;
 
 yesBtn.onclick = () => {
   document.querySelector(".buttons").style.display="none";
   question.style.display="none";
   yesMessage.style.display="block";
   hint.style.display="block";
-
   music.volume=0.4;
   music.play();
-
-  preloadImages();   // ✅ PRELOAD HERE
   startHearts();
 };
 
@@ -271,6 +284,9 @@ hint.onclick = () => {
   slider.style.display="block";
   showSlide();
 };
+
+let index = 0;
+let atFinal = false;
 
 function showSlide() {
   atFinal = false;
@@ -283,7 +299,6 @@ function showSlide() {
     img.src = slides[index].img;
     txt.innerText = slides[index].text;
     body.style.background = pastelBg[index];
-
     img.onload = () => img.classList.add("show");
   }, 40);
 
@@ -301,7 +316,6 @@ next.onclick = () => {
     txt.style.display="none";
     finalMsg.style.display="block";
     body.style.background="#4aa3b8";
-
     prev.classList.remove("hidden");
     next.classList.add("hidden");
   }
@@ -335,6 +349,3 @@ function startHearts(){
 
 </body>
 </html>
-
-
-
