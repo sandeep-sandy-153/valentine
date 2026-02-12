@@ -193,10 +193,10 @@ You just made my heart the happiest ❤️
 
 <div class="final" id="finalMsg">
 Chinni<br>
-    Mana ee prayanam lo chala daggara ayyam inka daggara ga avvali ani naku chala anipisthundi
-    Adi Twaralone jaruguthundi ani niku mata isthunna. Chala sarlu Godava paddam But nenu ayithe naku nitho padina kanna godava nuvve important anipisthadi chinni
-    Manam eppudu ilane enni sarlu godava padina manchiga kalisi undali chinni<br>
-    Wanted to be your valentine for the rest of my life💙
+  Mana ee prayanam lo chala daggara ayyam inka daggara ga avvali ani naku chala anipisthundi
+  Adi Twaralone jaruguthundi ani niku mata isthunna. Chala sarlu Godava paddam But nenu ayithe naku nitho padina kanna godava nuvve important anipisthadi chinni
+  Manam eppudu ilane enni sarlu godava padina manchiga kalisi undali chinni<br>
+  Wanted to be your valentine for the rest of my life💙
 </div>
 
 <div class="nav">
@@ -247,12 +247,13 @@ const slides = [
   {img:"photo12.jpg", text:"My Bujji Kutti chinni nuvu entha Boddhu ga untavo thelusa 😘 alane undu, Danikosam Nuvvu thintu undu nenu peduthu unta 🍲"}
 ];
 
+function preloadImages(){
 slides.forEach(s=>{
 const i=new Image();
 i.src=s.img;
 });
+}
 
-/* NO Logic */
 function moveNoButton(){
 const maxX=window.innerWidth-noBtn.offsetWidth;
 const maxY=window.innerHeight-noBtn.offsetHeight;
@@ -265,7 +266,7 @@ if(!yesCentered){
 yesCentered=true;
 yesBtn.style.position="fixed";
 yesBtn.style.left="50%";
-yesBtn.style.top="50%";
+yesBtn.style.top="65%";   /* ONLY CHANGE HERE */
 yesBtn.style.transform="translate(-50%,-50%) scale(1)";
 yesBtn.style.zIndex="1000";
 }
@@ -278,12 +279,16 @@ noBtn.onmouseover=moveNoButton;
 noBtn.onclick=moveNoButton;
 noBtn.ontouchstart=(e)=>{e.preventDefault();moveNoButton();};
 
-/* YES */
 yesBtn.onclick=()=>{
+preloadImages();
+
 noBtn.style.display="none";
+yesBtn.style.display="none";
+
 question.style.display="none";
 yesMessage.style.display="block";
 hint.style.display="block";
+
 music.play();
 startConfetti();
 };
@@ -295,7 +300,6 @@ slider.style.display="block";
 showSlide();
 };
 
-/* Slider */
 let index=0;
 let atFinal=false;
 
@@ -345,7 +349,6 @@ showSlide();
 }
 };
 
-/* Confetti */
 function startConfetti(){
 setInterval(()=>{
 const heart=document.createElement("div");
